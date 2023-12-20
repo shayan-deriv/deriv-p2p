@@ -50,8 +50,16 @@ const router = createBrowserRouter([
         Component: MyProfilePage,
       },
       {
-        path: "/p2p/advertiser/:id",
+        path: "/p2p/advertisers/:id",
         Component: AdvertiserPage,
+      },
+      {
+        path: "/p2p/buy-sell/buy",
+        Component: BuySellPage,
+      },
+      {
+        path: "/p2p/buy-sell/sell",
+        Component: BuySellPage,
       },
     ],
 
