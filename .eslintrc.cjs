@@ -4,7 +4,8 @@ module.exports = {
   extends: ['@deriv/eslint-config-deriv'],
   rules:{
     "import/no-absolute-path" : "off",
-    'import/no-extraneous-dependencies': ['warn', { devDependencies: true }],
+    'import/no-extraneous-dependencies': ['off', { devDependencies: true }],
+    "simple-import-sort/imports": "off",
   },
   parser: '@typescript-eslint/parser',
 };
