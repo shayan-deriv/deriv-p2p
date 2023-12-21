@@ -4,37 +4,43 @@
             "id": 1,
             "advertiser": "john",
             "title": "advert 1",
-            "type": "buy"
+            "type": "buy",
+            "customers": [53,54,12]
         },
         {
             "id": 2,
             "advertiser": "chris",
             "title": "advert 2",
-            "type": "sell"
+            "type": "sell",
+            "customers": []
         },
         {
             "id": 3,
             "advertiser": "david",
             "title": "advert 3",
-            "type": "buy"
+            "type": "buy",
+            "customers": []
         },
         {
             "id": 4,
             "advertiser": "Alice",
             "title": "advert 4",
-            "type": "buy"
+            "type": "buy",
+            "customers": [11,113]
         },
         {
             "id": 5,
             "advertiser": "Mary",
             "title": "advert 5",
-            "type": "buy"
+            "type": "buy",
+            "customers": [32]
         },
         {
             "id": 6,
             "advertiser": "Samantha",
             "title": "advert 6",
-            "type": "sell"
+            "type": "sell",
+            "customers": [21]
         }
 
     ],
@@ -68,6 +74,43 @@
             "id": 6,
             "name": "Samantha",
             "email": "samantha@gmail.com"
+        }
+    ],
+    "customers":[
+        {
+            "id" : 53,
+            "name": "customer53 ",
+            "advert_id": 1
+        },
+        {
+            "id" : 54,
+            "name": "customer54 ",
+            "advert_id": 1
+        },
+        {
+            "id" : 12,
+            "name": "customer 12",
+            "advert_id": 1
+        },
+        {
+            "id" : 11,
+            "name": "customer 11",
+            "advert_id": 4
+        },
+        {
+            "id" : 113,
+            "name": "customer 113",
+            "advert_id": 4
+        },
+        {
+            "id" : 32,
+            "name": "customer 32",
+            "advert_id": 5
+        },
+        {
+            "id" : 21,
+            "name": "customer 21",
+            "advert_id": 6
         }
     ]
 }

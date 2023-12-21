@@ -31,6 +31,7 @@ const router = createBrowserRouter([
       {
         path: "/p2p",
         element: <Navigate to="/p2p/buy-sell?type=buy" />,
+        // path="/companies/*" element={<CompaniesRouter />}
       },
       {
         path: "/p2p/buy-sell",
@@ -54,11 +55,11 @@ const router = createBrowserRouter([
         Component: AdvertiserPage,
       },
       {
-        path: "/p2p/buy-sell/buy",
+        path: "/p2p/buy-sell/buy/:id",
         Component: BuySellPage,
       },
       {
-        path: "/p2p/buy-sell/sell",
+        path: "/p2p/buy-sell/sell/:id",
         Component: BuySellPage,
       },
     ],
