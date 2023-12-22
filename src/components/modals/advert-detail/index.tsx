@@ -1,24 +1,36 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-// import { useGetUrlParams } from "../../../hooks";
+/* eslint-disable no-unused-vars */
+import React, { useEffect } from "react";
 
+type TModalStates = "advert_detail" | "advert_confirmation" | "action_successful"
 type TAdvertDetailModal = {
-    // eslint-disable-next-line no-unused-vars
     onClose: (e: React.MouseEvent<HTMLElement>) => void;
+    onNextAction: (e: React.MouseEvent<HTMLElement>, next_step: TModalStates ) => void;
     advert_id: string;
-
 }
-const AdvertDetailModal = ({ onClose }: TAdvertDetailModal) => {
-    const navigate = useNavigate();
-    // const {targetParams} = useGetUrlParams(['']);
+
+type TAdvert = {
+    id: number;
+    advertiser: string;
+    title: string;
+    type: string;
+}
+
+const AdvertDetailModal = ({ onClose, onNextAction, advert_id }: TAdvertDetailModal) => {
+    const [advert, setAdvert] = React.useState<Partial<TAdvert>>({});
+    const fetchAdvert = async () => {
+        const response = await fetch(`http://localhost:3001/adverts/${advert_id}`);
+        const data = await response.json();
+        setAdvert(data);
+    }
+
+    useEffect(() => {
+        fetchAdvert();
+    }
+    , []);
+
     return (
         <div
-            onClick={
-                (e) => {
-                    onClose(e);
-                    e.stopPropagation();
-                }
-            }
+            onClick={onClose}
             style={{
                 position: "fixed",
                 top: 0,
@@ -43,22 +55,20 @@ const AdvertDetailModal = ({ onClose }: TAdvertDetailModal) => {
                     boxShadow: "2px solid black",
                     zIndex: 10,
                 }}
+                onClick={(e) => e.stopPropagation()}
             >
                 <h2>advert details:</h2>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <button onClick={(e) => {
-                        e.stopPropagation();
-                        onClose(e)
-                    }
-                    }>Cancel</button>
-                    <button onClick={
-                        (e) => {
-                            // eslint-disable-next-line no-console
-                            e.stopPropagation();
-                            onClose(e);
-                            navigate('/p2p/buy-sell')
-                        }
-                    }>Buy</button>
+                <div style={{ display: "flex", justifyContent: "space-between", flexDirection:'column' }}>
+                    <div style={{display:'flex', flexDirection:'column', paddingBottom:10}}>
+                    <span>id:{ advert?.id}</span>
+                    <span>advertiser:{ advert?.advertiser}</span>
+                    <span>title:{ advert?.title}</span>
+                    <span>type:{ advert?.type}</span>
+                    </div>
+                    <div style={{display:"flex", justifyContent:"flex-end", gap:5}}>
+                    <button onClick={(e) => { onNextAction(e ,'advert_detail') }}>prev</button>
+                    <button onClick={(e) => { onNextAction(e, 'advert_confirmation') }}>next</button>
+                    </div>
                 </div>
             </div>
         </div>

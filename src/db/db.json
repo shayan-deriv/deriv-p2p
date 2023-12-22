@@ -1,11 +1,24 @@
 {
+    "user":{
+        "id": 1,
+        "name": "shayan",
+        "password": "123456",
+        "role": "admin",
+        "is_user_verified": true,
+        "is_allowed_to_see_advert_detail": true,
+        "is_allowed_to_buy_or_sell_advert": true
+    },
     "adverts": [
         {
             "id": 1,
             "advertiser": "john",
             "title": "advert 1",
             "type": "buy",
-            "customers": [53,54,12]
+            "customers": [
+                53,
+                54,
+                12
+            ]
         },
         {
             "id": 2,
@@ -26,25 +39,31 @@
             "advertiser": "Alice",
             "title": "advert 4",
             "type": "buy",
-            "customers": [11,113]
+            "customers": [
+                11,
+                113
+            ]
         },
         {
             "id": 5,
             "advertiser": "Mary",
             "title": "advert 5",
             "type": "buy",
-            "customers": [32]
+            "customers": [
+                32
+            ]
         },
         {
             "id": 6,
             "advertiser": "Samantha",
             "title": "advert 6",
             "type": "sell",
-            "customers": [21]
+            "customers": [
+                21
+            ]
         }
-
     ],
-    "advertisers":[
+    "advertisers": [
         {
             "id": 1,
             "name": "john",
@@ -76,39 +95,39 @@
             "email": "samantha@gmail.com"
         }
     ],
-    "customers":[
+    "customers": [
         {
-            "id" : 53,
+            "id": 53,
             "name": "customer53 ",
             "advert_id": 1
         },
         {
-            "id" : 54,
+            "id": 54,
             "name": "customer54 ",
             "advert_id": 1
         },
         {
-            "id" : 12,
+            "id": 12,
             "name": "customer 12",
             "advert_id": 1
         },
         {
-            "id" : 11,
+            "id": 11,
             "name": "customer 11",
             "advert_id": 4
         },
         {
-            "id" : 113,
+            "id": 113,
             "name": "customer 113",
             "advert_id": 4
         },
         {
-            "id" : 32,
+            "id": 32,
             "name": "customer 32",
             "advert_id": 5
         },
         {
-            "id" : 21,
+            "id": 21,
             "name": "customer 21",
             "advert_id": 6
         }

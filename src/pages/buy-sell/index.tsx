@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AdvertDetailModal from "../../components/modals/advert-detail";
 import { useGetUrlParams } from "../../hooks";
 import getAdvertIdFromUrl from "../../utils/url/getAdvertIdFromUrl"
+import { AuthContext } from "../../context/AuthProvider";
 
 type TAdvert = {
     id: number;
@@ -10,7 +11,15 @@ type TAdvert = {
     title: string;
     type: string;
 }[]
+
+type TModalStates = "advert_detail" | "advert_confirmation" | "action_successful"
+
 const BuySellPage = () => {
+    const {
+        is_user_verified,
+        is_allowed_to_see_advert_detail,
+        is_allowed_to_buy_or_sell_advert,
+    } = useContext(AuthContext);
     const { urlParams, setUrlParams } = useGetUrlParams();
     const [adverts, setAdverts] = React.useState<TAdvert>([]);
 
@@ -19,6 +28,13 @@ const BuySellPage = () => {
 
     const advert_type = urlParams.get('type')
     const selected_advert_id = getAdvertIdFromUrl(current_url) ?? '';
+    const current_modal = urlParams.get('step') ?? undefined;
+
+    const SemanticModalRoutes = {
+        advert_detail: `/p2p/buy-sell/modal/${advert_type}/${selected_advert_id}?type=${advert_type}&step=show_advert_detail`,
+        advert_confirmation: `/p2p/buy-sell/modal/${advert_type}/${selected_advert_id}?type=${advert_type}&step=show_advert_confirmation`,
+        action_successful: `/p2p/buy-sell/modal/${advert_type}/${selected_advert_id}?type=${advert_type}&step=action_successful`,
+    }
 
     const handleClose = (e: React.MouseEvent<HTMLElement>) => {
         e.stopPropagation();
@@ -27,8 +43,37 @@ const BuySellPage = () => {
 
     const handleOpen = (e: React.MouseEvent<HTMLElement>, advert_id: number) => {
         e.stopPropagation();
-        navigate(`/p2p/buy-sell/${advert_type}/${advert_id}?type=${advert_type}`);
+        if (is_user_verified && is_allowed_to_see_advert_detail)
+            navigate(`/p2p/buy-sell/modal/${advert_type}/${advert_id}?type=${advert_type}&step=show_advert_detail`);
+        else
+            navigate('/401')
     };
+
+    const isVerified = (step : TModalStates) => {
+        switch (step) {
+            case 'advert_detail':
+                return is_user_verified && is_allowed_to_see_advert_detail;
+            case 'advert_confirmation':
+                return is_user_verified && is_allowed_to_buy_or_sell_advert;
+            case 'action_successful':
+                return is_user_verified;
+            default:
+                return false;
+        }
+    }
+
+    const handleNextState = (
+            e: React.MouseEvent<HTMLElement>,
+            next_step:TModalStates
+        ) => {
+        e.stopPropagation();
+        //verify if user is valid to perform next action
+            if(isVerified(next_step)){
+                navigate(SemanticModalRoutes[next_step]);
+            }else{
+                navigate('/401')
+            }
+    }
 
     const filterBuyAndSell = (type: string) => {
         setUrlParams({ type });
@@ -64,7 +109,15 @@ const BuySellPage = () => {
                 )
             })}
         </ul>
-        {selected_advert_id && <AdvertDetailModal onClose={handleClose} advert_id={selected_advert_id} />}
+        {
+            is_user_verified && is_allowed_to_see_advert_detail && selected_advert_id && current_modal === 'show_advert_detail' &&
+            <AdvertDetailModal onClose={handleClose} onNextAction={handleNextState} advert_id={selected_advert_id} />
+        }
+
+        {
+            is_user_verified && selected_advert_id && current_modal === 'show_advert_confirmation' &&
+            <AdvertDetailModal onClose={handleClose} onNextAction={handleNextState} advert_id={selected_advert_id} />
+        }
 
     </div>;
 };

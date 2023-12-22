@@ -5,10 +5,12 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
+import AuthProvider from './context/AuthProvider';
 
 import Root from "./routes/root";
 import P2PHomePage from "./pages/home";
-import ErrorPage from "./pages/404";
+import Page404 from "./pages/404";
+import Page401 from "./pages/401";
 import BuySellPage from './pages/buy-sell';
 import OrdersPage from './pages/orders';
 import MyAdsPage from './pages/my-ads';
@@ -21,7 +23,11 @@ const router = createBrowserRouter([
   {
     path: "/",
     Component: Root,
-    errorElement: <ErrorPage />,
+    errorElement: <Page404 />,
+  },
+  {
+    path: "/401",
+    Component: Page401,
   },
 
   {
@@ -55,11 +61,11 @@ const router = createBrowserRouter([
         Component: AdvertiserPage,
       },
       {
-        path: "/p2p/buy-sell/buy/:id",
+        path: "/p2p/buy-sell/modal/buy/:id",
         Component: BuySellPage,
       },
       {
-        path: "/p2p/buy-sell/sell/:id",
+        path: "/p2p/buy-sell/modal/sell/:id",
         Component: BuySellPage,
       },
     ],
@@ -70,6 +76,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>,
 )
