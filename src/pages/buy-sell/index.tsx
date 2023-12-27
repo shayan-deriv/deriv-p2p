@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AdvertDetailModal from "../../components/modals/advert-detail";
+// import AdvertConfirmationModal from "../../components/modals/confirmation";
+
 import { useGetUrlParams } from "../../hooks";
 import getAdvertIdFromUrl from "../../utils/url/getAdvertIdFromUrl"
 import { AuthContext } from "../../context/AuthProvider";
@@ -62,6 +64,24 @@ const BuySellPage = () => {
         }
     }
 
+    // buy-sell/create/advert/1/confirmation
+    // const handleRouteState = (currentRoute, parentRoute?) => {
+    //     switch (currentRoute) {
+    //         case startsWith('/buy-sell', '/my-ads', '/my-orders', '/my-profile'):
+    //             if (userIsNotVerified) {
+    //                 navigate('/401')
+    //             }
+    //             handleRouteState(currentRoute.without('/buy-sell'), '/buy-sell')
+    //             // switch(currentRoute.without('/buy-sell'), '/buy-sell'){ // create/advert/1/confirmation
+
+    //         case '/advert':
+    //             if (parentRoute === '/buy-sell') {
+    //                 if ()//
+    //             }
+
+    //     }
+    // }
+
     const handleNextState = (
             e: React.MouseEvent<HTMLElement>,
             next_step:TModalStates
@@ -114,10 +134,10 @@ const BuySellPage = () => {
             <AdvertDetailModal onClose={handleClose} onNextAction={handleNextState} advert_id={selected_advert_id} />
         }
 
-        {
+        {/* {
             is_user_verified && selected_advert_id && current_modal === 'show_advert_confirmation' &&
-            <AdvertDetailModal onClose={handleClose} onNextAction={handleNextState} advert_id={selected_advert_id} />
-        }
+            <AdvertConfirmationModal onClose={handleClose} onNextAction={handleNextState} advert_id={selected_advert_id} />
+        } */}
 
     </div>;
 };

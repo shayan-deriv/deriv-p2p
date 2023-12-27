@@ -1,20 +1,24 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
+import React, { useEffect } from "react";
 
+type TModalStates = "advert_detail" | "advert_confirmation" | "action_successful"
 type TAdvertConfirmationModal = {
-    // eslint-disable-next-line no-unused-vars
     onClose: (e: React.MouseEvent<HTMLElement>) => void;
+    onNextAction: (e: React.MouseEvent<HTMLElement>, next_step: TModalStates ) => void;
     advert_id: string;
-
 }
-const AdvertConfirmationModal = ({ onClose }: TAdvertConfirmationModal) => {
+
+type TAdvert = {
+    id: number;
+    advertiser: string;
+    title: string;
+    type: string;
+}
+
+const AdvertConfirmationModal = ({ onClose, onNextAction, advert_id }: TAdvertConfirmationModal) => {
     return (
         <div
-            onClick={
-                (e) => {
-                    onClose(e);
-                    e.stopPropagation();
-                }
-            }
+            onClick={onClose}
             style={{
                 position: "fixed",
                 top: 0,
@@ -30,8 +34,8 @@ const AdvertConfirmationModal = ({ onClose }: TAdvertConfirmationModal) => {
             <div
                 style={{
                     background: "grey",
-                    height: 150,
-                    width: 240,
+                    height: 450,
+                    width: 540,
                     margin: "auto",
                     padding: "2%",
                     border: "2px solid #000",
@@ -39,11 +43,14 @@ const AdvertConfirmationModal = ({ onClose }: TAdvertConfirmationModal) => {
                     boxShadow: "2px solid black",
                     zIndex: 10,
                 }}
+                onClick={(e) => e.stopPropagation()}
             >
-                <h2>Are you sure?</h2>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <button onClick={}>No</button>
-                    <button onClick={}>Yes</button>
+                <h2>are you sure?</h2>
+                <div style={{ display: "flex", justifyContent: "space-between", flexDirection:'column' }}>
+                    <div style={{display:"flex", justifyContent:"flex-end", gap:5}}>
+                    <button onClick={(e) => { onNextAction(e ,'advert_detail') }}>no</button>
+                    <button onClick={(e) => { onNextAction(e, 'action_successful') }}>yes</button>
+                    </div>
                 </div>
             </div>
         </div>
